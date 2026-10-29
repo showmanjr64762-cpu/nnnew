@@ -101,7 +101,17 @@ const gameAliasMap = {
   "astro-crash": "astro_crash.html",
   "astrocrash": "astro_crash.html",
   "ace_vs_joker": "astro_crash.html",
-  "ace_vs_joker.html": "astro_crash.html"
+  "ace_vs_joker.html": "astro_crash.html",
+  "final_survival": "final_survival.html",
+  "final_survival.html": "final_survival.html",
+  "halloween_crash": "halloween_crash.html",
+  "halloween_crash.html": "halloween_crash.html",
+  "night_jump": "night_jump.html",
+  "night_jump.html": "night_jump.html",
+  "penalty_nations_cup": "penalty_nations_cup.html",
+  "penalty_nations_cup.html": "penalty_nations_cup.html",
+  "chicken_road_new": "chicken_road_new.html",
+  "chicken_road_new.html": "chicken_road_new.html"
 };
 
 // Automatic game normalization and dist sync on startup for seamless deployment
@@ -2151,7 +2161,7 @@ app.get('/api/health', (req, res) => {
     status: 'ok',
     uptime: process.uptime(),
     timestamp: Date.now(),
-    gamesCount: 11,
+    gamesCount: 17,
     ...envInfo
   });
 });
@@ -2207,7 +2217,12 @@ app.get('/api/games', (req, res) => {
     { id: 'snakes_and_ladders_2', name: 'Snakes and Ladders 2', file: 'snakes_and_ladders_2.html', alias: '/snakes_and_ladders_2' },
     { id: 'tik_tak_win', name: 'Tik Tak Win', file: 'tik_tak_win.html', alias: '/tik_tak_win' },
     { id: 'glass_roulette', name: 'Glass Roulette', file: 'glass_roulette.html', alias: '/glass_roulette' },
-    { id: 'astro_crash', name: 'Astro Crash', file: 'astro_crash.html', alias: '/astro_crash' }
+    { id: 'astro_crash', name: 'Astro Crash', file: 'astro_crash.html', alias: '/astro_crash' },
+    { id: 'final_survival', name: 'Final Survival', file: 'final_survival.html', alias: '/final_survival' },
+    { id: 'halloween_crash', name: 'Halloween Crash', file: 'halloween_crash.html', alias: '/halloween_crash' },
+    { id: 'night_jump', name: 'Night Jump', file: 'night_jump.html', alias: '/night_jump' },
+    { id: 'penalty_nations_cup', name: 'Penalty Nations Cup', file: 'penalty_nations_cup.html', alias: '/penalty_nations_cup' },
+    { id: 'chicken_road_new', name: 'Chicken Road', file: 'chicken_road_new.html', alias: '/chicken_road_new' }
   ]);
 });
 
@@ -3261,7 +3276,9 @@ app.get('/', (req, res) => {
 });
 
 app.get('/lobby', (req, res) => {
-  res.sendFile(path.join(__dirname, 'lobby.html'));
+  const lobbyPath = path.join(__dirname, 'lobby.html');
+  const fallbackPath = path.join(__dirname, 'index.html');
+  res.sendFile(fs.existsSync(lobbyPath) ? lobbyPath : fallbackPath);
 });
 
 // Middleware to resolve game requests smoothly across all devices & URLs
