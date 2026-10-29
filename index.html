@@ -5245,6 +5245,11 @@
                             <div class="game-label" style="background-image: url('https://www.zc777a.com/siteadmin/skin/lobby_asset/common/common/home/img_game_tj1_zj.avif?manualVersion=1&version=52ab2471ee');"></div>
                             <div class="favorite-star" style="background-image: url('https://www.zc777a.com/siteadmin/skin/lobby_asset/common/web/home/btn_sc_off_2.avif?manualVersion=1&version=abfbb0d8b0');"></div>
                         </div>
+                        <div class="game-card" style="background-image: url('https://cdn.jsdelivr.net/gh/royalmatch64762-spec/images-@main/final%20survival.png?raw=true');" data-game="final_survival" data-file="final_survival.html" data-name="Final Survival"><div class="game-label"></div><div class="favorite-star"></div></div>
+                        <div class="game-card" style="background-image: url('https://cdn.jsdelivr.net/gh/royalmatch64762-spec/images-@main/halloween%20crash.png?raw=true');" data-game="halloween_crash" data-file="halloween_crash.html" data-name="Halloween Crash"><div class="game-label"></div><div class="favorite-star"></div></div>
+                        <div class="game-card" style="background-image: url('https://cdn.jsdelivr.net/gh/royalmatch64762-spec/images-@main/night%20jump.png?raw=true');" data-game="night_jump" data-file="night_jump.html" data-name="Night Jump"><div class="game-label"></div><div class="favorite-star"></div></div>
+                        <div class="game-card" style="background-image: url('https://cdn.jsdelivr.net/gh/royalmatch64762-spec/images-@main/penalty%20nations%20cup.png?raw=true');" data-game="penalty_nations_cup" data-file="penalty_nations_cup.html" data-name="Penalty Nations Cup"><div class="game-label"></div><div class="favorite-star"></div></div>
+                        <div class="game-card" style="background-image: url('https://cdn.jsdelivr.net/gh/royalmatch64762-spec/images-@main/chccken%20road%20russea.png?raw=true');" data-game="chicken_road_new" data-file="chicken_road_new.html" data-name="Chicken Road"><div class="game-label"></div><div class="favorite-star"></div></div>
                     </div>
                 </div>
 
@@ -5701,6 +5706,16 @@
         </div>
 
         <!-- ===== PROMO PAGE ===== -->
+        <div class="modal-overlay" id="promoDisabledModal" style="display:none; z-index:100000;">
+            <div class="modal-content" style="max-width:340px; background:#1e1e1e; border:1px solid #3a3a3a; border-radius:12px; padding:24px 20px; text-align:center; color:#fff;">
+                <button type="button" aria-label="Close" onclick="window.closeModal('promoDisabledModal')" style="float:right; background:none; border:0; color:#aaa; font-size:20px; cursor:pointer;">&times;</button>
+                <div style="font-size:34px; margin:8px 0 12px;">Promo</div>
+                <h3 style="margin:0 0 10px;">Feature temporarily disabled</h3>
+                <p style="margin:0; color:#aaa; line-height:1.5;">This feature is temporarily disabled and will be available soon.</p>
+                <button type="button" onclick="window.closeModal('promoDisabledModal')" style="margin-top:20px; width:100%; border:0; border-radius:8px; padding:11px; background:#f59e0b; color:#171717; font-weight:700; cursor:pointer;">OK</button>
+            </div>
+        </div>
+
         <div class="promo-page" id="promoPage">
             <div class="promo-header">
                 <button class="promo-back-btn" id="promoBackBtn">
@@ -10525,9 +10540,9 @@
                     didScroll = false;
                     return;
                 }
-                const link = this.dataset.link;
-                if (link) {
-                    window.open(link, '_blank');
+                const disabledModal = document.getElementById('promoDisabledModal');
+                if (disabledModal && typeof window.openModal === 'function') {
+                    window.openModal(disabledModal);
                 }
             });
         });
