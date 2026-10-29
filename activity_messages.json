@@ -1,0 +1,19 @@
+[
+  {
+    "id": "msg_1793222154012_6759",
+    "type": "DEPOSIT_REQUEST",
+    "message": "Deposit Request of Rs 100 submitted by smoke@example.com",
+    "details": {
+      "depositId": "dep_1793222153981_1041",
+      "amount": 100,
+      "bonus": 0.5,
+      "channel": "EasyPaisa",
+      "transactionRef": "03123456789",
+      "userId": "smoke_user",
+      "userEmail": "smoke@example.com"
+    },
+    "userId": "smoke_user",
+    "userEmail": "smoke@example.com",
+    "timestamp": "2026-10-28T21:15:54.012Z"
+  }
+]
