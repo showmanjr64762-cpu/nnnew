@@ -101,17 +101,7 @@ const gameAliasMap = {
   "astro-crash": "astro_crash.html",
   "astrocrash": "astro_crash.html",
   "ace_vs_joker": "astro_crash.html",
-  "ace_vs_joker.html": "astro_crash.html",
-  "final_survival": "final_survival.html",
-  "final_survival.html": "final_survival.html",
-  "halloween_crash": "halloween_crash.html",
-  "halloween_crash.html": "halloween_crash.html",
-  "night_jump": "night_jump.html",
-  "night_jump.html": "night_jump.html",
-  "penalty_nations_cup": "penalty_nations_cup.html",
-  "penalty_nations_cup.html": "penalty_nations_cup.html",
-  "chicken_road_new": "chicken_road_new.html",
-  "chicken_road_new.html": "chicken_road_new.html"
+  "ace_vs_joker.html": "astro_crash.html"
 };
 
 // Automatic game normalization and dist sync on startup for seamless deployment
@@ -2161,7 +2151,7 @@ app.get('/api/health', (req, res) => {
     status: 'ok',
     uptime: process.uptime(),
     timestamp: Date.now(),
-    gamesCount: 17,
+    gamesCount: 11,
     ...envInfo
   });
 });
@@ -2217,12 +2207,7 @@ app.get('/api/games', (req, res) => {
     { id: 'snakes_and_ladders_2', name: 'Snakes and Ladders 2', file: 'snakes_and_ladders_2.html', alias: '/snakes_and_ladders_2' },
     { id: 'tik_tak_win', name: 'Tik Tak Win', file: 'tik_tak_win.html', alias: '/tik_tak_win' },
     { id: 'glass_roulette', name: 'Glass Roulette', file: 'glass_roulette.html', alias: '/glass_roulette' },
-    { id: 'astro_crash', name: 'Astro Crash', file: 'astro_crash.html', alias: '/astro_crash' },
-    { id: 'final_survival', name: 'Final Survival', file: 'final_survival.html', alias: '/final_survival' },
-    { id: 'halloween_crash', name: 'Halloween Crash', file: 'halloween_crash.html', alias: '/halloween_crash' },
-    { id: 'night_jump', name: 'Night Jump', file: 'night_jump.html', alias: '/night_jump' },
-    { id: 'penalty_nations_cup', name: 'Penalty Nations Cup', file: 'penalty_nations_cup.html', alias: '/penalty_nations_cup' },
-    { id: 'chicken_road_new', name: 'Chicken Road', file: 'chicken_road_new.html', alias: '/chicken_road_new' }
+    { id: 'astro_crash', name: 'Astro Crash', file: 'astro_crash.html', alias: '/astro_crash' }
   ]);
 });
 
@@ -3276,49 +3261,8 @@ app.get('/', (req, res) => {
 });
 
 app.get('/lobby', (req, res) => {
-  const lobbyPath = path.join(__dirname, 'lobby.html');
-  const fallbackPath = path.join(__dirname, 'index.html');
-  res.sendFile(fs.existsSync(lobbyPath) ? lobbyPath : fallbackPath);
+  res.sendFile(path.join(__dirname, 'lobby.html'));
 });
-
-// New games run inside the lobby iframe and use the lobby balance bridge.
-const integratedGameFiles = new Set([
-  'final_survival.html',
-  'halloween_crash.html',
-  'night_jump.html',
-  'penalty_nations_cup.html',
-  'chicken_road_new.html'
-]);
-
-function sendIntegratedGame(res, filePath) {
-  const fileName = path.basename(filePath);
-  if (!integratedGameFiles.has(fileName)) return res.sendFile(filePath);
-
-  let html = fs.readFileSync(filePath, 'utf8');
-  html = html.replace(/<div class="preview__header">[\s\S]*?<\/div>\s*(?=<div|<iframe|<main|<script)/i, '');
-  const bridge = `<style>
-    .preview__header, .preview__envato-logo, .preview__actions, .preview__action--buy { display:none !important; }
-  </style>
-  <script src="/pk96-balance.js"></script>
-  <script>
-    (() => {
-      const currencyPattern = /[$€£¥₹]|\\b(?:USD|EUR|GBP|PKR)\\b/g;
-      const cleanText = (node) => {
-        if (node.nodeType === Node.TEXT_NODE && node.parentElement && !['SCRIPT','STYLE'].includes(node.parentElement.tagName)) {
-          node.nodeValue = node.nodeValue.replace(currencyPattern, '');
-        }
-        node.childNodes?.forEach(cleanText);
-      };
-      const clean = () => cleanText(document.body);
-      document.addEventListener('DOMContentLoaded', clean, { once: true });
-      new MutationObserver(clean).observe(document.documentElement, { childList: true, subtree: true });
-    })();
-  </script>`;
-  html = html.replace(/<head([^>]*)>/i, '<head$1>' + bridge);
-  res.setHeader('Content-Type', 'text/html; charset=UTF-8');
-  res.removeHeader('X-Frame-Options');
-  return res.send(html);
-}
 
 // Middleware to resolve game requests smoothly across all devices & URLs
 app.use((req, res, next) => {
@@ -3338,7 +3282,7 @@ app.use((req, res, next) => {
         if (fs.existsSync(targetFile)) {
           res.setHeader('Content-Type', 'text/html; charset=UTF-8');
           res.removeHeader('X-Frame-Options');
-          return sendIntegratedGame(res, targetFile);
+          return res.sendFile(targetFile);
         }
       }
     }
@@ -3353,7 +3297,7 @@ app.use((req, res, next) => {
           res.setHeader('Content-Type', 'application/javascript; charset=UTF-8');
         }
         res.removeHeader('X-Frame-Options');
-        return sendIntegratedGame(res, directFile);
+        return res.sendFile(directFile);
       }
 
       if (baseName && baseName !== decodedPath) {
@@ -3377,13 +3321,13 @@ app.use((req, res, next) => {
         if (fs.existsSync(htmlFile) && fs.statSync(htmlFile).isFile()) {
           res.setHeader('Content-Type', 'text/html; charset=UTF-8');
           res.removeHeader('X-Frame-Options');
-          return sendIntegratedGame(res, htmlFile);
+          return res.sendFile(htmlFile);
         }
         const baseHtmlFile = path.join(dir, baseName + '.html');
         if (fs.existsSync(baseHtmlFile) && fs.statSync(baseHtmlFile).isFile()) {
           res.setHeader('Content-Type', 'text/html; charset=UTF-8');
           res.removeHeader('X-Frame-Options');
-          return sendIntegratedGame(res, baseHtmlFile);
+          return res.sendFile(baseHtmlFile);
         }
       }
     }
