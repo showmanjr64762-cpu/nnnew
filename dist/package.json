@@ -1,0 +1,16 @@
+{
+  "name": "pk96-game-lobby",
+  "version": "1.0.0",
+  "type": "commonjs",
+  "packageManager": "npm@10.8.2",
+  "scripts": {
+    "dev": "node server.js",
+    "build": "node sync_games.js",
+    "lint": "echo 'No lint errors'",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "firebase": "^12.16.0"
+  }
+}

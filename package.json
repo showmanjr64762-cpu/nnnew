@@ -2,6 +2,7 @@
   "name": "pk96-game-lobby",
   "version": "1.0.0",
   "type": "commonjs",
+  "packageManager": "npm@10.8.2",
   "scripts": {
     "dev": "node server.js",
     "build": "node sync_games.js",
