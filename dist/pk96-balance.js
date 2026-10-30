@@ -58,12 +58,7 @@
     'fortune_jem3_jems_v3',
     'casino_balance',
     'astro_crash_balance',
-    'ace_vs_joker_balance',
-    'final_survival_balance',
-    'halloween_crash_balance',
-    'night_jump_balance',
-    'penalty_nations_cup_balance',
-    'chicken_road_new_balance'
+    'ace_vs_joker_balance'
   ];
 
   function isBalanceKey(key) {
