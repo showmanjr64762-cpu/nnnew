@@ -2151,7 +2151,7 @@ app.get('/api/health', (req, res) => {
     status: 'ok',
     uptime: process.uptime(),
     timestamp: Date.now(),
-    gamesCount: 12,
+    gamesCount: 11,
     ...envInfo
   });
 });
@@ -3261,9 +3261,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/lobby', (req, res) => {
-  const lobbyPath = path.join(__dirname, 'lobby.html');
-  const fallbackPath = path.join(__dirname, 'index.html');
-  res.sendFile(fs.existsSync(lobbyPath) ? lobbyPath : fallbackPath);
+  res.sendFile(path.join(__dirname, 'lobby.html'));
 });
 
 // Middleware to resolve game requests smoothly across all devices & URLs

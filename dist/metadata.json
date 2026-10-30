@@ -1,8 +1,0 @@
-{
-  "name": "Pk96 Game Lobby",
-  "description": "Premium Casino & Arcade Game Suite featuring referral commission bonus claims, milestone chest rewards, Desert Axe, Aviator, Neon Spins, and Glass Roulette.",
-  "requestFramePermissions": [],
-  "majorCapabilities": [
-    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
-  ]
-}
