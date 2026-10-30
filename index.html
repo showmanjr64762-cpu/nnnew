@@ -7187,12 +7187,7 @@
             }
             const activeSlide = slides[currentIndex];
             if (activeSlide && activeSlide.dataset.link) {
-                const disabledModal = document.getElementById('promoDisabledModal');
-                if (disabledModal && typeof window.openModal === 'function') {
-                    window.openModal(disabledModal);
-                } else if (disabledModal) {
-                    disabledModal.style.display = 'flex';
-                }
+                window.open(activeSlide.dataset.link, '_blank');
             }
         });
 
@@ -18458,14 +18453,14 @@
       'football_bet.html', 'halloween_crash.html', '10000_bc.html',
       'mayan_temple_slot.html', 'stairway_to_wealth.html', 'penalty_nations_cup.html',
       'super_soccer_slots.html', 'prehistory_slots.html', 'mummy_slot.html',
-      'snakes_and_ladders_2.html', 'tik_tak_win.html', 'chicken_road_new.html',
-      'night_jump.html'
+      'snakes_and_ladders_2.html', 'tik_tak_win.html'
     ]);
 
     function openGame(card) {
       const requested = (card.dataset.file || '').trim();
       if (!gameFiles.has(requested)) return;
-      launchGame(card.dataset.name || 'Game View', requested);
+      const target = new URL(requested, window.location.href).href;
+      window.location.assign(target);
     }
 
     document.addEventListener('click', (event) => {

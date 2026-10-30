@@ -3281,45 +3281,6 @@ app.get('/lobby', (req, res) => {
   res.sendFile(fs.existsSync(lobbyPath) ? lobbyPath : fallbackPath);
 });
 
-// New games run inside the lobby iframe and use the lobby balance bridge.
-const integratedGameFiles = new Set([
-  'final_survival.html',
-  'halloween_crash.html',
-  'night_jump.html',
-  'penalty_nations_cup.html',
-  'chicken_road_new.html'
-]);
-
-function sendIntegratedGame(res, filePath) {
-  const fileName = path.basename(filePath);
-  if (!integratedGameFiles.has(fileName)) return res.sendFile(filePath);
-
-  let html = fs.readFileSync(filePath, 'utf8');
-  html = html.replace(/<div class="preview__header">[\s\S]*?<\/div>\s*(?=<div|<iframe|<main|<script)/i, '');
-  const bridge = `<style>
-    .preview__header, .preview__envato-logo, .preview__actions, .preview__action--buy { display:none !important; }
-  </style>
-  <script src="/pk96-balance.js"></script>
-  <script>
-    (() => {
-      const currencyPattern = /[$€£¥₹]|\\b(?:USD|EUR|GBP|PKR)\\b/g;
-      const cleanText = (node) => {
-        if (node.nodeType === Node.TEXT_NODE && node.parentElement && !['SCRIPT','STYLE'].includes(node.parentElement.tagName)) {
-          node.nodeValue = node.nodeValue.replace(currencyPattern, '');
-        }
-        node.childNodes?.forEach(cleanText);
-      };
-      const clean = () => cleanText(document.body);
-      document.addEventListener('DOMContentLoaded', clean, { once: true });
-      new MutationObserver(clean).observe(document.documentElement, { childList: true, subtree: true });
-    })();
-  </script>`;
-  html = html.replace(/<head([^>]*)>/i, '<head$1>' + bridge);
-  res.setHeader('Content-Type', 'text/html; charset=UTF-8');
-  res.removeHeader('X-Frame-Options');
-  return res.send(html);
-}
-
 // Middleware to resolve game requests smoothly across all devices & URLs
 app.use((req, res, next) => {
   try {
@@ -3338,7 +3299,7 @@ app.use((req, res, next) => {
         if (fs.existsSync(targetFile)) {
           res.setHeader('Content-Type', 'text/html; charset=UTF-8');
           res.removeHeader('X-Frame-Options');
-          return sendIntegratedGame(res, targetFile);
+          return res.sendFile(targetFile);
         }
       }
     }
@@ -3353,7 +3314,7 @@ app.use((req, res, next) => {
           res.setHeader('Content-Type', 'application/javascript; charset=UTF-8');
         }
         res.removeHeader('X-Frame-Options');
-        return sendIntegratedGame(res, directFile);
+        return res.sendFile(directFile);
       }
 
       if (baseName && baseName !== decodedPath) {
@@ -3377,13 +3338,13 @@ app.use((req, res, next) => {
         if (fs.existsSync(htmlFile) && fs.statSync(htmlFile).isFile()) {
           res.setHeader('Content-Type', 'text/html; charset=UTF-8');
           res.removeHeader('X-Frame-Options');
-          return sendIntegratedGame(res, htmlFile);
+          return res.sendFile(htmlFile);
         }
         const baseHtmlFile = path.join(dir, baseName + '.html');
         if (fs.existsSync(baseHtmlFile) && fs.statSync(baseHtmlFile).isFile()) {
           res.setHeader('Content-Type', 'text/html; charset=UTF-8');
           res.removeHeader('X-Frame-Options');
-          return sendIntegratedGame(res, baseHtmlFile);
+          return res.sendFile(baseHtmlFile);
         }
       }
     }

@@ -613,20 +613,6 @@
         .game-card:hover {
             transform: translateY(-3px);
         }
-        .new-game-card::after {
-            content: attr(data-name);
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            padding: 18px 7px 7px;
-            color: #fff;
-            font-size: 11px;
-            font-weight: 700;
-            text-align: center;
-            background: linear-gradient(transparent, rgba(0, 0, 0, .86));
-            pointer-events: none;
-        }
         .game-card .game-name {
             display: none !important;
         }
@@ -5259,11 +5245,11 @@
                             <div class="game-label" style="background-image: url('https://www.zc777a.com/siteadmin/skin/lobby_asset/common/common/home/img_game_tj1_zj.avif?manualVersion=1&version=52ab2471ee');"></div>
                             <div class="favorite-star" style="background-image: url('https://www.zc777a.com/siteadmin/skin/lobby_asset/common/web/home/btn_sc_off_2.avif?manualVersion=1&version=abfbb0d8b0');"></div>
                         </div>
-                        <div class="game-card new-game-card" style="background-image: url('https://cdn.jsdelivr.net/gh/royalmatch64762-spec/images-@main/final%20survival.png?raw=true');" data-game="final_survival" data-file="final_survival.html" data-name="Final Survival"></div>
-                        <div class="game-card new-game-card" style="background-image: url('https://cdn.jsdelivr.net/gh/royalmatch64762-spec/images-@main/halloween%20crash.png?raw=true');" data-game="halloween_crash" data-file="halloween_crash.html" data-name="Halloween Crash"></div>
-                        <div class="game-card new-game-card" style="background-image: url('https://cdn.jsdelivr.net/gh/royalmatch64762-spec/images-@main/night%20jump.png?raw=true');" data-game="night_jump" data-file="night_jump.html" data-name="Night Jump"></div>
-                        <div class="game-card new-game-card" style="background-image: url('https://cdn.jsdelivr.net/gh/royalmatch64762-spec/images-@main/penalty%20nations%20cup.png?raw=true');" data-game="penalty_nations_cup" data-file="penalty_nations_cup.html" data-name="Penalty Nations Cup"></div>
-                        <div class="game-card new-game-card" style="background-image: url('https://cdn.jsdelivr.net/gh/royalmatch64762-spec/images-@main/chccken%20road%20russea.png?raw=true');" data-game="chicken_road_new" data-file="chicken_road_new.html" data-name="Chicken Road"></div>
+                        <div class="game-card" style="background-image: url('https://cdn.jsdelivr.net/gh/royalmatch64762-spec/images-@main/final%20survival.png?raw=true');" data-game="final_survival" data-file="final_survival.html" data-name="Final Survival"><div class="game-label"></div><div class="favorite-star"></div></div>
+                        <div class="game-card" style="background-image: url('https://cdn.jsdelivr.net/gh/royalmatch64762-spec/images-@main/halloween%20crash.png?raw=true');" data-game="halloween_crash" data-file="halloween_crash.html" data-name="Halloween Crash"><div class="game-label"></div><div class="favorite-star"></div></div>
+                        <div class="game-card" style="background-image: url('https://cdn.jsdelivr.net/gh/royalmatch64762-spec/images-@main/night%20jump.png?raw=true');" data-game="night_jump" data-file="night_jump.html" data-name="Night Jump"><div class="game-label"></div><div class="favorite-star"></div></div>
+                        <div class="game-card" style="background-image: url('https://cdn.jsdelivr.net/gh/royalmatch64762-spec/images-@main/penalty%20nations%20cup.png?raw=true');" data-game="penalty_nations_cup" data-file="penalty_nations_cup.html" data-name="Penalty Nations Cup"><div class="game-label"></div><div class="favorite-star"></div></div>
+                        <div class="game-card" style="background-image: url('https://cdn.jsdelivr.net/gh/royalmatch64762-spec/images-@main/chccken%20road%20russea.png?raw=true');" data-game="chicken_road_new" data-file="chicken_road_new.html" data-name="Chicken Road"><div class="game-label"></div><div class="favorite-star"></div></div>
                     </div>
                 </div>
 
@@ -5758,9 +5744,8 @@
         <!-- ===== GAME PAGE ===== -->
         <div class="game-page" id="gamePage">
             <div class="game-page-bar">
-                <button class="game-page-floating-back" id="gamePageBackBtn" title="Back to Lobby" aria-label="Back to Lobby">
+                <button class="game-page-floating-back" id="gamePageBackBtn" title="Back to Lobby">
                     <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
-                    <span>Back</span>
                 </button>
                 <button class="game-page-floating-fullscreen" id="gamePageFullscreenBtn" title="Toggle Fullscreen">
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
